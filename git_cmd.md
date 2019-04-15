@@ -115,8 +115,17 @@
 * commit 是tree (树就是文件夹) 是当时commit时的所有文件夹下的内容
 * blob相当于是文件
 
+
+
+
 * 
-* 
+* git diff HEAD HEAD^1  (比较最近的两次提交的差异)
+* git branch -d 分支名 删除分支
+* git branch -D 分支名 删除分支(**在风险可控的情况下用**)
+* git commit --amend  修改**最近一次**提交的log message
+* git rebase -i  本地commit 历史 提交 变更message
+
+
 
 
 
