@@ -120,10 +120,32 @@
 
 * 
 * git diff HEAD HEAD^1  (比较最近的两次提交的差异)
-* git branch -d 分支名 删除分支
-* git branch -D 分支名 删除分支(**在风险可控的情况下用**)
+* git branch -d 分支名 (删除分支)
+* git branch -D 分支名 (删除分支(**在风险可控的情况下用**))
 * git commit --amend  修改**最近一次**提交的log message
 * git rebase -i  本地commit 历史 提交 变更message
+
+* git diff --cached (比较暂存区和HEAD(commit)的区别)
+* git diff  (比较工作区和暂存的的区别)
+* git reset HEAD (让暂存区恢复成和HEAD一样).
+* ===变工作区用checkout   变暂存区用reset===
+* git checkout -- 文件名 (把工作区的内容恢复到和暂存区一致)
+* git reset HEAD --文件名 (把暂存区某一个文件恢复到上一次commit一致)
+
+
+
+* git reset --hard commit的id  (恢复)
+* git diff  分支1  分支2   文件名 (比较两个分支此文件的差异) ==> git diff commitId号  commitId号  也同样效果
+
+
+
+
+
+
+
+
+
+
 
 
 
