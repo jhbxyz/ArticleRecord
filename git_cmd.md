@@ -148,7 +148,19 @@
 
 
 
-* rm
+* rm -rf 文件名 (删除文件)
+
+
+
+* git remote -v (查看远端仓库)
+* git  reomte add 仓库名 路径 (和远端仓库关联)
+* git push --set-upstream  本地仓库名  远端仓库名 (和远端仓库关联)
+
+
+
+# 和远端服务器玩儿
+
+
 
 
 
