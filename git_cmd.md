@@ -118,7 +118,6 @@
 
 
 
-* 
 * git diff HEAD HEAD^1  (比较最近的两次提交的差异)
 * git branch -d 分支名 (删除分支)
 * git branch -D 分支名 (删除分支(**在风险可控的情况下用**))
@@ -136,6 +135,20 @@
 
 * git reset --hard commit的id  (恢复)
 * git diff  分支1  分支2   文件名 (比较两个分支此文件的差异) ==> git diff commitId号  commitId号  也同样效果
+* rm 文件名 (删除此文件)
+* git rm 文件名 (把删除的文件添加到暂存区)
+* git reset --hard HADE (把工作区和暂存区恢复成和头指针一直(也就是最后一次commit)
+
+
+
+* git stash (临时存贮) 
+* git stash list
+* git stash apply (可以恢复原来文件 但是 git stash list 里面的对象一直存在 你可以反复使用)
+* git stash pop (恢复原来文件, 并删除存储的对象)
+
+
+
+* rm
 
 
 
