@@ -162,7 +162,14 @@
 
 
 
-* test ssh
+* cd ~/.ssh  (看是否有ssh 文件)
+* ssh-keygen -t rsa -b 4096 -C "your_simple@email.com"
+* git  remote add 名称  ssh地址 (增加远端)
+* git push 远端名称 --all (把本地所有分支 push 到远端)
+* git fetch 
+* git merge
+* git push
+* git cheout -b 本地分支名  远端分支名 (本地分支和远端分支关联)
 * 
 
 
