@@ -170,9 +170,17 @@
 * git merge
 * git push
 * git cheout -b 本地分支名  远端分支名 (本地分支和远端分支关联)
-* 
+* git push -f  (严禁使用)
 
 
+
+# 如何在github中高质量搜索
+
+
+
+* Advanced search
+* 在搜索栏中 输入关键字  in:readme  stars:>1000
+* 例如 :  blog easily start in:readme stars:>1000
 
 
 
