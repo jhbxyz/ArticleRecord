@@ -7,7 +7,7 @@
 
 **整体流程图**
 
-![Activity启动流程图.png]([https://github.com/jhbxyz/ArticleRecord/blob/master/images/Activity%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B%E5%9B%BE.png](https://github.com/jhbxyz/ArticleRecord/blob/master/images/Activity启动流程图.png))
+![Activity的启动流程.png](https://github.com/jhbxyz/ArticleRecord/blob/master/images/1-1.png)
 
 ### 1.startActivity方法
 
