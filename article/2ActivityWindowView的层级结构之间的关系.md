@@ -13,7 +13,7 @@
 
 先来一张结构清晰的结构图，一目了然！
 
-![Activity的启动流程.png](https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/2-1.png)
+![窗口的层级结构](https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/2-1.jpg)
 
 **注意：**
 
