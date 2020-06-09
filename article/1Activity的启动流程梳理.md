@@ -7,7 +7,7 @@
 
 **整体流程图**
 
-![Activity的启动流程.png](https://github.com/jhbxyz/ArticleRecord/blob/master/images/1-1.png)
+![Activity的启动流程.png](https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/1-1.png)
 
 ### 1.startActivity方法
 
@@ -751,5 +751,5 @@ public void execute(ClientTransactionHandler client, IBinder token,
 
 **至此，目标 Activity 已经被成功创建并执行生命周期方法**
 
-
+[原文地址](https://github.com/jhbxyz/ArticleRecord/blob/master/article/1Activity%E7%9A%84%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B%E6%A2%B3%E7%90%86.md)
 
