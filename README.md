@@ -1,5 +1,6 @@
-# 我的文章记录
-* **git 常用的命令**  https://github.com/jhbxyz/MyNote/blob/master/git_cmd.md
+# 我的文
+
+ **git 常用的命令**  https://github.com/jhbxyz/MyNote/blob/master/git_cmd.md
 
 * [Activity的启动流程梳理](https://github.com/jhbxyz/ArticleRecord/blob/master/article/1Activity%E7%9A%84%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B%E6%A2%B3%E7%90%86.md)
 
