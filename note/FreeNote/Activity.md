@@ -48,13 +48,7 @@ Service中调用startActivity和在BroadcastReceiver（静态注册）中通过o
 
 
 
-
-
-
-
-
-
-### setResult()的调用时机
+### 3.setResult()的调用时机
 
 因为在 Activity B 退回Activity A过程中，执行过程是
 
@@ -66,6 +60,11 @@ Service中调用startActivity和在BroadcastReceiver（静态注册）中通过o
 　　B---onStop
 　　B---onDestroy
 
-
-
 **setResult()应该在什么时候调用呢**？从源码可以看出，Activity返回result是在被finish的时候，也就是说调用setResult()方法必须在finish()之前。
+
+
+
+
+
+
+
