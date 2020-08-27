@@ -319,7 +319,7 @@ public abstract class Lifecycle {
 
 如下图
 
-![](https://github.com/jhbxyz/AwesomeJetpack/blob/master/images/Lifecycle_1.jpg)
+![](https://github.com/jhbxyz/ArticleRecord/blob/master/articles/Jetpack/images/1-1.jpg)
 
 ##### 4.5 总结
 
@@ -497,7 +497,7 @@ static State getStateAfter(Event event) {
 
 上面代码结合这个图看，食用效果更加
 
-![](https://github.com/jhbxyz/AwesomeJetpack/blob/master/images/Lifecycle_1.jpg)
+![](https://github.com/jhbxyz/ArticleRecord/blob/master/articles/Jetpack/images/1-1.jpg)
 
 不同的Lifecycle.Event的生命周期状态对Lifecycle.State的当前状态的取值。
 
@@ -873,11 +873,11 @@ LifecycleRegistry调用handleLifecycleEvent方法时会传递Event类型，然�
 
 ### 10.源码地址
 
-
+[ActivityLifecycleObserver.kt](https://github.com/jhbxyz/AwesomeJetpack/blob/master/app/src/main/java/com/jhb/awesomejetpack/lifecycle/ActivityLifecycleObserver.kt)
 
 ### 11.原文地址
 
-
+[Android Jetpack组件Lifecycle基本使用和原理分析](https://github.com/jhbxyz/ArticleRecord/blob/master/articles/Jetpack/1Lifecycle%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90.md)
 
 ### 12.参考文章
 
