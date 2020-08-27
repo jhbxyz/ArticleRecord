@@ -871,15 +871,15 @@ LifecycleRegistry的handleLifecycleEvent方法，然后会通过层层调用最�
 
 LifecycleRegistry调用handleLifecycleEvent方法时会传递Event类型，然后会通过层层调用，最后是通过反射获取注解的值，到LifecycleObserver方法上的@OnLifecycleEvent(Lifecycle.Event.XXX)注解上对应的Event的值，注意这个值是和Activity/Fragment的生命周期的一一对应的，所以就可以感知Activity、Fragment的生命周期了。
 
-### 7.源码地址
+### 10.源码地址
 
 
 
-### 8.原文地址
+### 11.原文地址
 
 
 
-### 9.参考文章
+### 12.参考文章
 
 [使用生命周期感知型组件处理生命周期  ](https://developer.android.com/topic/libraries/architecture/lifecycle.html)
 
