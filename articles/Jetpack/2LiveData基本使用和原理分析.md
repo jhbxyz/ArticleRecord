@@ -751,7 +751,7 @@ LiveData 的源码非常值得读，而且量不是很大，里面有许多值�
 
 ### 12.原文地址
 
-[Android Jetpack组件Lifecycle基本使用和原理分析](https://github.com/jhbxyz/ArticleRecord/blob/master/articles/Jetpack/1Lifecycle%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90.md)
+[Android Jetpack组件LiveData基本使用和原理分析](https://github.com/jhbxyz/ArticleRecord/blob/master/articles/Jetpack/2LiveData%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90.md)
 
 ### 13.参考文章
 
