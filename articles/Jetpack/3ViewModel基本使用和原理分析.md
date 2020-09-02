@@ -677,7 +677,7 @@ ViewModelStore的 `get`方法，是根据 key 来取值的，如果 key相同，
 
 ### 14.原文地址
 
-
+[Android Jetpack组件ViewModel基本使用和原理分析](https://github.com/jhbxyz/ArticleRecord/blob/master/articles/Jetpack/3ViewModel%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90.md)
 
 ### 15.参考文章
 
@@ -687,11 +687,11 @@ ViewModelStore的 `get`方法，是根据 key 来取值的，如果 key相同，
 
 
 
+## 系列文章
 
-
-
-
-
+- [Android Jetpack组件Lifecycle基本使用和原理分析](https://juejin.im/post/6865568507698872328)
+- [Android Jetpack组件LiveData基本使用和原理分析](https://juejin.im/post/6867036161446969352)
+- [Android Jetpack组件ViewModel基本使用和原理分析](https://juejin.im/post/6867448675871195149)
 
 
 
