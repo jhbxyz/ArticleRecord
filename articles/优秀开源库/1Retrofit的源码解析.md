@@ -1315,11 +1315,11 @@ suspend fun test(name: String) {
 
 我们通过 Android Studio 再带的工具，如下图：把 Kotlin 方法转成 Java 方法
 
-![]([https://github.com/jhbxyz/ArticleRecord/blob/master/articles/%E4%BC%98%E7%A7%80%E5%BC%80%E6%BA%90%E5%BA%93/images/1-1.jpg](https://github.com/jhbxyz/ArticleRecord/blob/master/articles/优秀开源库/images/1-1.jpg))
+![](https://github.com/jhbxyz/ArticleRecord/blob/master/articles/%E4%BC%98%E7%A7%80%E5%BC%80%E6%BA%90%E5%BA%93/images/1-1.jpg)
 
 点这个按钮
 
-![]([https://github.com/jhbxyz/ArticleRecord/blob/master/articles/%E4%BC%98%E7%A7%80%E5%BC%80%E6%BA%90%E5%BA%93/images/1-2.jpg](https://github.com/jhbxyz/ArticleRecord/blob/master/articles/优秀开源库/images/1-2.jpg))
+![](https://github.com/jhbxyz/ArticleRecord/blob/master/articles/%E4%BC%98%E7%A7%80%E5%BC%80%E6%BA%90%E5%BA%93/images/1-2.jpg)
 
 结果如下
 
@@ -1638,4 +1638,6 @@ Retrofit 中的动态代理：
 [Retrofit](https://square.github.io/retrofit/)
 
 [从一道面试题开始说起 枚举、动态代理的原理](https://blog.csdn.net/lmj623565791/article/details/79278864)
+
+
 
