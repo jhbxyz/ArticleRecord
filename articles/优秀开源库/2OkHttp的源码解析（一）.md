@@ -346,6 +346,20 @@ override fun execute(): Response {
 
 
 
+### 11.源码地址
+
+[OkHttpActivity.kt](https://github.com/jhbxyz/ArticleCode/blob/master/app/src/main/java/com/aboback/articlecode/okhttp/OkHttpActivity.kt)
+
+### 12.原文地址
+
+[OkHttp请求的流程的梳理](https://github.com/jhbxyz/ArticleRecord/blob/master/articles/%E4%BC%98%E7%A7%80%E5%BC%80%E6%BA%90%E5%BA%93/2OkHttp%E7%9A%84%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%EF%BC%88%E4%B8%80%EF%BC%89.md)
+
+### 13.参考资料
+
+[OkHttp](https://square.github.io/okhttp/)
+
+
+
 
 
 
