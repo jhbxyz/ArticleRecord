@@ -9,7 +9,8 @@
 - Converter 的转换过程，怎么通过 Gson 转成对应的数据模型的？
 - CallAdapter 的替换过程，怎么转成 RxJava 进行操作的？
 - 如何支持 Kotlin 协程的 suspend 挂起函数的？
-  * 关于 Kotlin 协程请求网络，首先写一个 Demo 来看一下协程是怎么进行网络请求的，然后会再具体分析代码
+  
+  > 关于 Kotlin 协程请求网络，首先写一个 Demo 来看一下用协程是怎么进行网络请求的，然后会再具体分析怎么转换成 Kotlin 的协程的请求
 
 我会在文章中，通过源码，逐步解开疑惑，并且在最后文章结尾会再次总结，回答上面的几个问题。
 
@@ -32,8 +33,8 @@ implementation 'com.squareup.retrofit2:adapter-rxjava2:2.7.2'
 
 implementation 'com.google.code.gson:gson:2.8.6'
 
-implementation 'io.reactivex.rxjava3:rxjava:3.0.6'
-implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
+implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
 ```
 
 ### 1.什么是Retrofit
@@ -89,8 +90,8 @@ interface GitHubApiService {
 先看几个表面上的类
 
 * Retrofit：总揽全局一个类，一些配置，需要通过其内部 **Builder** 类构建，比如 CallAdapter、Converter 等
-* GitHubApiService：自己写的 API 接口，通过Retrofit 的 `create` 方法进行实例化
-* Call：Retrofit 的 Call，是执行网络请求的是一个顶层接口，需要看源码中的具体实现类实际是一个 **OkHttpCall**，下面会具体说
+* GitHubApiService：自己写的 API 接口，通过 Retrofit 的 `create` 方法进行实例化
+* Call：Retrofit 的 Call，是执行网络请求的是一个顶层接口，需要看源码，具体实现类实际是一个 **OkHttpCall**，下面会具体说
 * Callback：请求结果回调
 
 接下来重点来了，进行源码分析。
@@ -149,13 +150,13 @@ public <T> T create(final Class<T> service) {
 
 注释 2 ：是一个动态代理的方法，来返回 GitHubApiService 的实例
 
-动态代理？嗯？什么是动态代理，接下来，我就写一个具体的例子来展示一个动态代理的具体用法，以及什么是动态代理
-
-先插播一段动态代理代码，这个是理解 Retrofit 的工作机制所必须的。
+> 动态代理？嗯？什么是动态代理，接下来，我就写一个具体的例子来展示一个动态代理的具体用法，以及什么是动态代理？
+>
+> 先插播一段动态代理代码，这个是理解 Retrofit 的工作机制所必须的。
 
 ### 6.动态代理的示例
 
-##### 6.1.写一个动态代理的 Demo
+#### 6.1.写一个动态代理的 Demo
 
 下面是一个 **Java** 项目，模拟一个 Retrofit 的请求过程
 
@@ -191,7 +192,7 @@ public class ProxyDemo {
 }
 ```
 
-执行 `main`方法
+执行 `main` 方法
 
 当我们调用 `apiService.listRepos("octcat");`方法时，打印出来如下结果
 
@@ -202,7 +203,7 @@ method = listRepos   args = [octcat]
 
 可以看到当我们调用`listRepos`方法的时候，InvocationHandler 的 `invoke`方法中拦截到了我们的方法，参数等信息。**Retrofit 的原理其实就是这样，拦截到方法、参数，再根据我们在方法上的注解，去拼接为一个正常的OkHttp 请求，然后执行。**
 
-日志的第一行，在运行时这个类一个`$Proxy0`的类。实际上，在运行期 GitHubApiService 的接口会动态的创建出**实现类**也就是这个 `$Proxy0`类，它大概长这个样子，具体的看[鸿洋](https://blog.csdn.net/lmj623565791)这篇文章  [从一道面试题开始说起 枚举、动态代理的原理](https://blog.csdn.net/lmj623565791/article/details/79278864)
+日志的第一行，在运行时这个类一个`$Proxy0`的类。实际上，在运行期 GitHubApiService 的接口会动态的创建出**实现类**也就是这个 `$Proxy0`类，它大概长下面这个样子，具体的看[鸿洋](https://blog.csdn.net/lmj623565791)这篇文章  [从一道面试题开始说起 枚举、动态代理的原理](https://blog.csdn.net/lmj623565791/article/details/79278864)
 
 我做了一个点改动，方便查看，本质上都是一样的
 
@@ -225,10 +226,10 @@ class $Proxy0 extends Proxy implements GitHubApiService {
 
 我们在调用`listRepos`方法的时候，实际上调用的是 InvocationHandler 的 `invoke` 方法。
 
-##### 6.2总结
+#### 6.2总结
 
 * 在 ProxyDemo 代码运行中，会动态创建 GitHubApiService 接口的实现类，作为代理对象，执行InvocationHandler 的 `invoke` 方法。
-* 动态指的是在运行期，而代理指的是实现了GitHubApiService 接口的具体类，称之为代理
+* 动态指的是在运行期，而代理指的是实现了GitHubApiService 接口的具体类，实现了接口的方法，称之为代理
 * 本质上是在运行期，生成了 GitHubApiService 接口的实现类，调用了 InvocationHandler 的 `invoke`方法。
 
 现在解决了第一个疑问：**什么是动态代理**
@@ -269,7 +270,7 @@ public <T> T create(final Class<T> service) {
 
 注释 1：获取一个 ClassLoader 对象
 
-注释 2：GitHubApiService 的字节码对象传到数组中去
+注释 2：GitHubApiService 的字节码对象传到数组中去，也即是我们要代理的具体接口。
 
 注释 3：InvocationHandler 的 `invoke` 是关键，从上面动态代理的 Demo 中，我们知道，在GitHubApiService声明的 `listRepos`方法在调用时，会执行 InvocationHandler 的`invoke`的方法体。
 
@@ -277,9 +278,9 @@ public <T> T create(final Class<T> service) {
 
 注释 5：如果是默认方法（比如 Java8 ），就执行 platform 的默认方法。**否则执行`loadServiceMethod`方法的`invoke`方法**
 
-`loadServiceMethod(method).invoke(args);`这个方法是我们这个 Retrofit 最关键的代码，也是分析的重点入口
+`loadServiceMethod(method).invoke(args);`这个方法是我们这个 Retrofit **最关键的代码**，也是分析的重点入口
 
-##### 7.1.先看loadServiceMethod方法
+#### 7.1.先看loadServiceMethod方法
 
 我们先看`loadServiceMethod`方法返回的是什么对象，然后再看这个对象的 `invoke` 方法
 
@@ -313,7 +314,7 @@ ServiceMethod<?> loadServiceMethod(Method method) {
 
 看一下 `ServiceMethod.parseAnnotations(this, method);`方法具体返回的对象是什么，然后再看它的 `invoke` 方法
 
-##### 7.2.ServiceMethod的parseAnnotations方法
+#### 7.2.ServiceMethod的parseAnnotations方法
 
 这个方法接下来还会看，这里我们只看现在需要的部分。
 
@@ -328,7 +329,7 @@ static <T> ServiceMethod<T> parseAnnotations(Retrofit retrofit, Method method) {
 
 返回的是一个**HttpServiceMethod**对象，那么接下来看下它的 invoke 方法
 
-##### 7.3.HttpServiceMethod 的 invoke 方法
+#### 7.3.HttpServiceMethod 的 invoke 方法
 
 ```java
 //HttpServiceMethod.java
@@ -431,9 +432,9 @@ public void enqueue(final Callback<T> callback) {
 }
 ```
 
-注释 1：声明一个 okhttp3.Call 对象，用来进行网络请求。
+注释 1：声明一个 okhttp3.Call 对象，用来进行网络请求
 
-注释 2：给 okhttp3.Call 对象进行赋值，下面会具体看代码，如果创建了一个 okhttp3.Call 对象。
+注释 2：给 okhttp3.Call 对象进行赋值，下面会具体看代码，如何创建了一个 okhttp3.Call 对象
 
 注释 3：调用 okhttp3.Call 的 `enqueue` 方法，进行真正的网络请求
 
@@ -445,12 +446,13 @@ public void enqueue(final Callback<T> callback) {
 
 到现在，我们文章开头两个疑问得到解释了
 
-* 整个请求的流程是怎样的？
-* 底层是如何用 OkHttp 请求的？
+> 整个请求的流程是怎样的？
+>
+> 底层是如何用 OkHttp 请求的？
 
 我们还要看下一个 okhttp3.Call 对象是怎么创建的，我们写的注解参数是怎么解析的，响应结果是如何解析的，也就是我们在 Retrofit 中配置 `addConverterFactory(GsonConverterFactory.create())`是如何直接拿到数据模型的。
 
-##### 8.1.okhttp3.Call 对象是怎么创建的
+#### 8.1.okhttp3.Call 对象是怎么创建的
 
 看下 `call = rawCall = createRawCall();`方法
 
@@ -468,7 +470,7 @@ private okhttp3.Call createRawCall() throws IOException {
 }
 ```
 
-通过 callFactory 创建的，看一下 callFactory 的赋值过程
+通过 callFactory 创建的（callFactory应该是 OkHttpClient），看一下 callFactory 的赋值过程
 
 ```java
 //OkHttpCall.java
@@ -485,7 +487,7 @@ OkHttpCall(
 }
 ```
 
-在 OkHttpCall 构造中直接赋值，那接下来就继续往回追代码
+在 OkHttpCall 构造中直接赋值，那接下来就继续看 OkHttpCall 的初始化过程
 
 ```java
 //HttpServiceMethod.java
@@ -515,6 +517,7 @@ HttpServiceMethod(
 在 7.2 小节，有一行代码`HttpServiceMethod.parseAnnotations(retrofit, method, requestFactory);`我们没有跟进去，现在看一下 **HttpServiceMethod** 是怎么创建的
 
 ```java
+//HttpServiceMethod.java
 static <ResponseT, ReturnT> HttpServiceMethod<ResponseT, ReturnT> parseAnnotations(
     Retrofit retrofit, Method method, RequestFactory requestFactory) {
   boolean isKotlinSuspendFunction = requestFactory.isKotlinSuspendFunction;
@@ -555,7 +558,7 @@ static <ResponseT, ReturnT> HttpServiceMethod<ResponseT, ReturnT> parseAnnotatio
 static final class CallAdapted<ResponseT, ReturnT> extends HttpServiceMethod<ResponseT, ReturnT> {}
 ```
 
-CallAdapted 是 HttpServiceMethod 的子类，会调用 `adapt`方法进行 CallAdapter 的转换，我们后面会详细看。
+> CallAdapted 是 HttpServiceMethod 的子类，会调用 `adapt`方法进行 CallAdapter 的转换，我们后面会详细看。
 
 继续看 Retrofit 的 callFactory 的值Retrofit是通过Builder构建的，看下Builder类
 
@@ -586,7 +589,7 @@ public static final class Builder {
 
 在创建okhttp3.Call 对象的 `callFactory.newCall(requestFactory.create(args));`方法中的 `requestFactory.create(args)`方法会返回一个 Request 的对象，这个我们也会在下面看是如何构造一个 OkHttp 的 Request 请求对象的。
 
-##### 8.2.请求注解参数是怎么解析的
+#### 8.2.请求注解参数是怎么解析的
 
 看 `ServiceMethod.parseAnnotations(this, method);`方法
 
@@ -615,16 +618,17 @@ final class RequestFactory {
     return new Builder(retrofit, method).build();
   }
   
-    RequestFactory build() {
-      //1
-      for (Annotation annotation : methodAnnotations) {
-        parseMethodAnnotation(annotation);
-      }
-
-     ....
-
-      return new RequestFactory(this);
+  //build方法
+  RequestFactory build() {
+    //1
+    for (Annotation annotation : methodAnnotations) {
+      parseMethodAnnotation(annotation);
     }
+
+   ....
+
+    return new RequestFactory(this);
+  }
 }
 ```
 
@@ -671,7 +675,7 @@ private void parseMethodAnnotation(Annotation annotation) {
 
 RequestFactory 对象返回出去，具体干嘛用了？大胆猜一下，解析出注解存到 RequestFactory 对象，这个对象身上可有各种请求的参数，然后肯定是类创建 OkHttp 的 Request请求对象啊，因为是用 OkHttp 请求的，它需要一个 Request 请求对象
 
-##### 8.3.RequestFactory 对象返回出去，具体干嘛用了?
+#### 8.3.RequestFactory 对象返回出去，具体干嘛用了?
 
 下面我就用一个代码块贴了，看着更直接，我会具体表明属于哪个类的
 
@@ -787,7 +791,7 @@ okhttp3.Request create(Object[] args) throws IOException {
 
 也就解答了**方法上的注解是什么时候解析的，怎么解析的？**这个问题
 
-##### 8.4.请求响应结果是如何解析的
+#### 8.4.请求响应结果是如何解析的
 
 比如我们在构造 Retrofit 的时候加上 `addConverterFactory(GsonConverterFactory.create())`这行代码，我们的响应结果是如何通过 Gson 直接解析成数据模型的？
 
@@ -957,7 +961,7 @@ public <T> Converter<ResponseBody, T> nextResponseBodyConverter(
 
 ```
 
-注释 1：从 converterFactories 遍历取出一个来调用 `responseBodyConverter` 方法，注意根据 responseType 返回值类型来取到对应的 Converter，如果不为空，直接返回此 Converter 对象
+注释 1：从 converterFactories 遍历取出一个来调用 `responseBodyConverter` 方法，注意根据 responseType **返回值类型**来取到对应的 Converter，如果不为空，直接返回此 Converter 对象
 
 看一下 converterFactories 这个对象的赋值过程
 
@@ -1026,7 +1030,7 @@ public Builder addConverterFactory(Converter.Factory factory) {
 
 注意：是怎么找到GsonConverterFactory来调用 Gson 的 convert方法的呢？在遍历converterFactories时会根据 **responseType**来找到对应的转换器。
 
-具体 GsonConverterFactory 的 convert 方法就是 Gson 的逻辑了，就不是 Retrofit 的重点了。
+具体 GsonConverterFactory 的 `convert` 方法就是 Gson 的逻辑了，就不是 Retrofit 的重点了。
 
 到现在**Converter 的转换过程**，我们也就清楚了。
 
@@ -1034,7 +1038,7 @@ public Builder addConverterFactory(Converter.Factory factory) {
 
 ### 9.CallAdapter的替换过程
 
-##### 9.1.使用 RxJava 进行网络请求
+#### 9.1.使用 RxJava 进行网络请求
 
 怎么转成 RxJava
 
@@ -1092,7 +1096,7 @@ public Builder addCallAdapterFactory(CallAdapter.Factory factory) {
 
 这就要看我们之前看到了一个类了 HttpServiceMethod 的`parseAnnotations`之前看过它的代码，只是上次看的是**Converter是如何赋值的**也就是第 8.4 小节，这次看 CallAdapter 是如何被赋值使用的。
 
-##### 9.2CallAdapter是如何被赋值过程
+#### 9.2CallAdapter是如何被赋值过程
 
 **HttpServiceMethod的`parseAnnotations`方法**
 
@@ -1253,7 +1257,7 @@ RxJava2CallAdapterFactory的 `get`方法
 
 首先写一个 Demo 来看一下协程是怎么进行网络请求的
 
-##### 10.1.Kotlin 协程请求网络的 Demo
+#### 10.1.Kotlin 协程请求网络的 Demo
 
 **添加依赖**
 
@@ -1297,7 +1301,7 @@ lifecycleScope.launchWhenResumed {
 
 以上就是一个，用 Kotlin 协程进行网络请求的，Retrofit 是支持 Kotlin 协程的，接下来看下，Retrofit 是怎么支持的。
 
-##### 10.2.分析Kotlin 协程的挂起函数的准备工作
+#### 10.2.分析Kotlin 协程的挂起函数的准备工作
 
 首先在开始之前，我们得先得从代码角度知道，Kotlin 的 suspend 函数对应的 Java 类是什么样子，不然，就一个 **suspend** 关键字根本就没法进行分析。
 
@@ -1317,7 +1321,7 @@ suspend fun test(name: String) {
 
 ![](https://github.com/jhbxyz/ArticleRecord/blob/master/articles/%E4%BC%98%E7%A7%80%E5%BC%80%E6%BA%90%E5%BA%93/images/1-1.jpg)
 
-点这个按钮
+**点这个按钮**
 
 ![](https://github.com/jhbxyz/ArticleRecord/blob/master/articles/%E4%BC%98%E7%A7%80%E5%BC%80%E6%BA%90%E5%BA%93/images/1-2.jpg)
 
@@ -1346,11 +1350,11 @@ public interface Continuation<in T> {
 
 好目前的准备工作都已经完成，开始分析 **Retrofit 是怎么支持 Kotlin 协程的挂起函数的。**
 
-##### 10.3.Retrofit 是怎么支持 Kotlin 协程的挂起函数的。
+#### 10.3.Retrofit 是怎么支持 Kotlin 协程的挂起函数的。
 
 经过前面的源码解读，我们知道，最终会调用到 HttpServiceMethod 的 `parseAnnotations` 方法
 
-###### 10.3.1.我们再看下这个方法，这次只看有关**协程**的部分
+##### 10.3.1.我们再看下这个方法，这次只看有关**协程**的部分
 
 ```java
 //HttpServiceMethod.java
@@ -1422,7 +1426,7 @@ static <ResponseT, ReturnT> HttpServiceMethod<ResponseT, ReturnT> parseAnnotatio
 
 获取 isKotlinSuspendFunction 的值的过程
 
-###### 10.3.2.看 requestFactory 的 isKotlinSuspendFunction 赋值
+##### 10.3.2.看 requestFactory 的 isKotlinSuspendFunction 赋值
 
 requestFactory 这个类，我们之前分析过，就是解析注解的，但是有一部分没看，就是解析方法参数上的注解，这次就看下。
 
@@ -1482,7 +1486,7 @@ private @Nullable ParameterHandler<?> parseParameter(
 
 接下来就要 SuspendForResponse 以及它的 `adapt` 方法了
 
-###### 10.3.3.看一下SuspendForResponse类
+##### 10.3.3.看一下SuspendForResponse类
 
 ```java
 static final class SuspendForResponse<ResponseT> extends HttpServiceMethod<ResponseT, Object> {
@@ -1519,7 +1523,7 @@ static final class SuspendForResponse<ResponseT> extends HttpServiceMethod<Respo
 }
 ```
 
-注释 1：调用callAdapter 代理 call 方法
+注释 1：调用 callAdapter 代理 call 方法
 
 注释 2：取出最后一个参数，强转成 Continuation 类型，想想我们写的 Demo
 
@@ -1527,7 +1531,7 @@ static final class SuspendForResponse<ResponseT> extends HttpServiceMethod<Respo
 
 注释 4：出现异常，抛出异常。所以我们要在代码中，要主动 try catch，来处理错误
 
-###### 10.3.4.看一下Call的扩展函数
+##### 10.3.4.看一下Call的扩展函数
 
 ```kotlin
 //KotlinExtensions.kt
@@ -1558,7 +1562,7 @@ suspend fun <T> Call<T>.awaitResponse(): Response<T> {
 
 至此，整个 Retrofit 的整体流程就分析完了，具体细节还需要好好研究，我们再总结一下，回答开始的问题
 
-##### 11.1.什么是动态代理？
+#### 11.1.什么是动态代理？
 
 分两点**动态**指的是在运行期，而代理指的是实现了某个接口的具体类，称之为代理，会调用了 InvocationHandler 的 `invoke`方法。
 
@@ -1569,9 +1573,9 @@ Retrofit 中的动态代理：
 * 在我们调用GitHubApiService 接口的实现类的 `listRepos`方法时，会调用了 InvocationHandler 的 `invoke`方法。
 * 本质上是在运行期，生成了 GitHubApiService 接口的实现类，调用了 InvocationHandler 的 `invoke`方法。
 
-具体看第 6 节
+> 具体看第 6 节
 
-##### 11.2.整个请求的流程是怎样的
+#### 11.2.整个请求的流程是怎样的
 
 * 我们在调用 GitHubApiService 接口的 `listRepos`方法时，会调用 InvocationHandler 的 `invoke`方法
 * 然后执行 `loadServiceMethod`方法并返回一个 HttpServiceMethod 对象并调用它的 `invoke`方法
@@ -1582,37 +1586,37 @@ Retrofit 中的动态代理：
 
 以上就是这个Retrofit 的请求流程
 
-##### 11.3.底层是如何用 OkHttp 请求的？
+#### 11.3.底层是如何用 OkHttp 请求的？
 
 看下第 11.2小节的解释吧
 
-具体看第 8 节
+> 具体看第 8 节
 
-##### 11.4.方法上的注解是什么时候解析的，怎么解析的？
+#### 11.4.方法上的注解是什么时候解析的，怎么解析的？
 
 * 在 ServiceMethod.parseAnnotations(this, method); 方法中开始的
 * 具体内容是在 RequestFactory 类中，进行解析注解的
 * 调用 RequestFactory.parseAnnotations(retrofit, method);  方法实现的
 
-具体看第 8.2 小节
+> 具体看第 8.2 小节
 
-##### 11.5.Converter 的转换过程，怎么通过 Gson 转成对应的数据模型的？
+#### 11.5.Converter 的转换过程，怎么通过 Gson 转成对应的数据模型的？
 
 * 通过成功回调的 `parseResponse(rawResponse);`方法开始
 * 通过 responseConverter 的 `convert` 方法
 * responseConverter 是通过 converterFactories 通过遍历，根据返回值类型来使用对应的 Converter 解析
 
-具体看第 8.4 小节
+> 具体看第 8.4 小节
 
-##### 11.6.CallAdapter 的替换过程，怎么转成 RxJava 进行操作的？
+#### 11.6.CallAdapter 的替换过程，怎么转成 RxJava 进行操作的？
 
 * 通过配置 addCallAdapterFactory(RxJava2CallAdapterFactory.create()) 在 callAdapterFactories 这个 list 中添加 RxJava2CallAdapterFactory
 * 如果不是 Kotlin 挂起函数最终调用的是 CallAdapted 的 `adapt`方法
-* callAdapter的实例是通过 callAdapterFactories 这个 list 通过遍历，根据返回值类型来选择合适的CallAdapter
+* callAdapter 的实例是通过 callAdapterFactories 这个 list 通过遍历，根据返回值类型来选择合适的CallAdapter
 
-具体看第 9 节
+> 具体看第 9 节
 
-##### 11.7.如何支持 Kotlin 协程的 suspend 挂起函数的？
+#### 11.7.如何支持 Kotlin 协程的 suspend 挂起函数的？
 
 - 通过 RequestFactory 解析方法上的参数值来判断是不是一个挂起函数，并把 isKotlinSuspendFunction 变量置为 true
 - 根据 isKotlinSuspendFunction 这个变量来判断响应类型是否是 Response 类型，然后把continuationWantsResponse 置为 true
@@ -1621,7 +1625,7 @@ Retrofit 中的动态代理：
 - 通过 Call 的扩展函数，来调用 Call 的 enqueue方法
 - 通过协程来返回
 
-具体看第 10 节
+> 具体看第 10 节
 
 到此为止，这篇文章算写完了，当然还有很多具体细节没有研究，但对 Retrofit 的各个方面都进行了阅读。
 
