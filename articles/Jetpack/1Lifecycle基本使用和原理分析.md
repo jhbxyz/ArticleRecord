@@ -8,7 +8,7 @@
 
 Lifecycle提供了可用于构建生命周期感知型组件的类和接口，可以根据 Activity 或 Fragment 的当前生命周期状态自动调整其行为。
 
-**一句话：可以感知 Activity/Fragment 的生命周期**并且可以在相应的回调事件中处理，非常方便
+**一句话：可以感知 Activity、Fragment 的生命周期**并且可以在相应的回调事件中处理，非常方便
 
 这样 Lifecycle 库能有效的避免内存泄漏和解决常见的 Android 生命周期难题！
 
@@ -16,7 +16,7 @@ Lifecycle提供了可用于构建生命周期感知型组件的类和接口，�
 
 假设我们有一这样的需求：我们想提供一个接口可以感知Activity的生命周期，并且实现回调！用 Lifecycle 是怎么实现的？
 
-##### 2.1.定义ILifecycleObserver接口
+#### 2.1.定义ILifecycleObserver接口
 
 首先我们定义一个接口去实现 **LifecycleObserver**，然后定义方法，用上**OnLifecycleEvent**注解。
 
@@ -47,7 +47,7 @@ interface ILifecycleObserver : LifecycleObserver {
 }
 ```
 
-**注意：**当然你也可以不实现LifecycleObserver而是实现 **DefaultLifecycleObserver** 接口，Google官方更推荐我们使用 **DefaultLifecycleObserver** 接口
+> 当然你也可以不实现LifecycleObserver而是实现 **DefaultLifecycleObserver** 接口，Google官方更推荐我们使用 **DefaultLifecycleObserver** 接口
 
 你可以在build.gradle 中依赖，然后就能使用了
 
@@ -62,7 +62,7 @@ class BaseLifecycle : DefaultLifecycleObserver {
 }
 ```
 
-##### 2.2.定义ActivityLifecycleObserver类
+#### 2.2.定义ActivityLifecycleObserver类
 
 定义ActivityLifecycleObserver类去实现我们定义好的ILifecycleObserver接口
 
@@ -101,9 +101,9 @@ class ActivityLifecycleObserver : ILifecycleObserver {
 }
 ```
 
-这个类中，我们在对应的生命周期方法中，打印一句Log，**方便测试**！这个类就是我们将要使用的类，它是一个观察者，可以观察Activity/Fragment的生命周期
+这个类中，我们在对应的生命周期方法中，打印一句Log，**方便测试**！这个类就是我们将要使用的类，它是一个观察者，可以观察Activity、Fragment的生命周期
 
-##### 2.3.定义BaseActivity
+#### 2.3.定义BaseActivity
 
 在我们的BaseActivity中通过getLifecycle()获取一个Lifecycle，然后把我们的ActivityLifecycleObserver添加进来
 
@@ -118,9 +118,9 @@ open class BaseActivity : AppCompatActivity() {
 
 **Lifecycle是被观察者**，通过Add的方式把**LifecycleObserver这个观察者**添加进来，然后在Activity 执行到对应生命周期的时候通知观察者
 
-**注意：**此时ActivityLifecycleObserver就可以感知Activity的生命周期了，就是这么的神奇
+> 此时ActivityLifecycleObserver就可以感知Activity的生命周期了，就是这么的神奇
 
-##### 2.4.定义LifecycleActivity类
+#### 2.4.定义LifecycleActivity类
 
 让LifecycleActivity**继承 **BaseActivity，然后运行代码，看日志
 
@@ -130,7 +130,7 @@ class LifecycleActivity : BaseActivity()
 
 LifecycleActivity来作为我们默认启动的Activity，启动LifecycleActivity然后关闭页面，来查看生命周期的日志！
 
-##### 2.5.结果日志
+#### 2.5.结果日志
 
 ```log
 E/ActivityLifecycleObserver: onCreate
@@ -167,7 +167,7 @@ E/ActivityLifecycleObserver: onLifecycleChanged  owner = com.jhb.awesomejetpack.
 
 在分析 Lifecycle 源码之前，我们必须先对几个**重要的类**有感性的认识，方便下面看源码！
 
-##### 4.1.LifecycleOwner
+#### 4.1.LifecycleOwner
 
 ```java
 public interface LifecycleOwner {
@@ -226,7 +226,7 @@ public class Fragment implements LifecycleOwner,XXX {
 
 我们先看下 Lifecycle 类是什么
 
-##### 4.2.Lifecycle
+#### 4.2.Lifecycle
 
 ```java
 public abstract class Lifecycle {
@@ -256,7 +256,7 @@ LifecycleRegistry类是对Lifecycle这个抽象类的具体实现，可以处理
 
 说完了被观察者，接下来看下观察者LifecycleObserver
 
-##### 4.3.LifecycleObserver
+#### 4.3.LifecycleObserver
 
 ```java
 public interface LifecycleObserver {
@@ -276,7 +276,7 @@ public @interface OnLifecycleEvent {
 
 注解的值是一个 **Lifecycle.Event** 也就是 4.2小节没有看的那两个枚举中的一个，接下来去看下Lifecycle中的两个枚举类。
 
-##### 4.4.Lifecycle.Event和Lifecycle.State
+#### 4.4.Lifecycle.Event和Lifecycle.State
 
 ```java
 public abstract class Lifecycle {
@@ -304,7 +304,7 @@ public abstract class Lifecycle {
 }
 ```
 
-**Event**：定一个一些枚举常量，和 Activity、Fragment 的生命周期是一一对应的，可以**响应其生命周期**，其中多了一个ON_ANY，它是可以匹配任何事件的，Event 的使用是和LifecycleObserver配合使用的，
+**Event**：定一个一些枚举常量，和 Activity、Fragment 的生命周期是一一对应的，可以**响应其生命周期**，其中多了一个ON_ANY，它是可以匹配任何事件的，Event 的使用是和 LifecycleObserver 配合使用的，
 
 ```java
 * class TestObserver implements LifecycleObserver {
@@ -321,7 +321,7 @@ public abstract class Lifecycle {
 
 ![](https://github.com/jhbxyz/ArticleRecord/blob/master/articles/Jetpack/images/1-1.jpg)
 
-##### 4.5 总结
+#### 4.5 总结
 
 - LifecycleOwner：可获取Lifecycle的接口，可以再 Activity、Fragment生命周期改变时，通过LifecycleRegistry类处理对应的生命周期事件，并通知 LifecycleObserver这个观察者
 
@@ -335,7 +335,7 @@ public abstract class Lifecycle {
 
 ### 5.Lifecycle的源码解析
 
-##### 5.1.分析的入口BaseActivity
+#### 5.1.分析的入口BaseActivity
 
 在基类BaseActivity中的一行代码就能实现对应生命周期的回调
 
@@ -352,7 +352,7 @@ open class BaseActivity : AppCompatActivity() {
 
 我们点进去这个getLifecycle()方法
 
-##### 5.2.ComponentActivity
+#### 5.2.ComponentActivity 类
 
 然后我们来到了ComponentActivity中，代码如下
 
@@ -380,7 +380,7 @@ public class ComponentActivity extends xxx implements LifecycleOwner,xxx {//1
 
 **注释4：**在onCreate方法中，看到初始化了一个ReportFragment，接下来看一下ReportFragment的源码
 
-##### 5.3.ReportFragment
+#### 5.3.ReportFragment 类
 
 ```java
 public class ReportFragment extends Fragment {
@@ -444,7 +444,7 @@ public class ReportFragment extends Fragment {
 }
 ```
 
-可以看到在ReportFragment中的各个生命周期都调用了`dispatch(Lifecycle.Event event)` 方法，传递了不同的**Event**的值，这个就是在Activity、Fragment生命周期回调时，Lifecycle所要处理的生命周期方法。
+可以看到在 ReportFragment 中的各个生命周期都调用了`dispatch(Lifecycle.Event event)` 方法，传递了不同的**Event**的值，这个就是在Activity、Fragment的各个生命周期回调时，Lifecycle 所要处理的生命周期方法。
 
 在**dispatch(Lifecycle.Event event)**方法中最终调用了`((LifecycleRegistry) lifecycle).handleLifecycleEvent(event);`方法
 
@@ -456,11 +456,11 @@ public class ReportFragment extends Fragment {
 
 **2.Lifecycle是如何处理生命周期的？**
 
-通过调用了`((LifecycleRegistry) lifecycle).handleLifecycleEvent(event);`方法，也就是LifecycleRegistry类来处理这些生命周期。
+通过调用了`((LifecycleRegistry) lifecycle).handleLifecycleEvent(event);`方法，也就是LifecycleRegistry 类来处理这些生命周期。
 
-此时，就应该看**LifecycleRegistry的handleLifecycleEvent**中的代码了
+此时，就应该看 LifecycleRegistry 的 `handleLifecycleEvent` 方法中的代码了
 
-##### 5.4.LifecycleRegistry
+#### 5.4.LifecycleRegistry 的 handleLifecycleEvent 方法
 
 ```java
 //LifecycleRegistry.java
@@ -471,7 +471,7 @@ public void handleLifecycleEvent(@NonNull Lifecycle.Event event) {
 
 ```
 
-根据当前Lifecycle.Event的值，其实也就是Activity/Fragment生命周期回调的值，来获取下一个**Lifecycle.State**的状态，也就是Lifecycle将要到什么状态
+根据当前Lifecycle.Event的值，其实也就是 Activity、Fragment 生命周期回调的值，来获取下一个 **Lifecycle.State** 的状态，也就是 Lifecycle 将要到什么状态
 
 ```java
 //LifecycleRegistry.java
@@ -499,7 +499,7 @@ static State getStateAfter(Event event) {
 
 ![](https://github.com/jhbxyz/ArticleRecord/blob/master/articles/Jetpack/images/1-1.jpg)
 
-不同的Lifecycle.Event的生命周期状态对Lifecycle.State的当前状态的取值。
+不同的 Lifecycle.Event 的生命周期状态对 Lifecycle.State 的当前状态的取值。
 
 继续跟代码，看下当到下一个状态时，要发生什么事情
 
@@ -523,7 +523,7 @@ private void moveToState(State next) {
 
 **注释1： sync()方法**
 
-然后看**LifecycleRegistry#sync()** 方法
+然后看 LifecycleRegistry 的 `sync` 方法
 
 ```java
 //LifecycleRegistry.java
@@ -550,11 +550,11 @@ private void sync() {
 
 ```
 
-如果没有同步过，会比较mState当前的状态和mObserverMap中的eldest和newest的状态做对比，看是往前还是往后；比如mState由STARTED到RESUMED是状态向前，反过来就是状态向后。这个是和Lifecycle生命周期有关系，但不是一个东西，具体的看上面贴的图，一目了然！
+如果没有同步过，会比较mState当前的状态和mObserverMap中的eldest和newest的状态做对比，看是往前还是往后；比如mState由STARTED到RESUMED是状态向前，反过来就是状态向后。这个是和 Lifecycle 生命周期有关系，但不是一个东西，具体的看上面贴的图，一目了然！
 
-**注释2：往后**这里看下往后的代码**forwardPass(lifecycleOwner);**
+注释2：往后这里看下往后的代码**forwardPass(lifecycleOwner);**
 
-然后看**LifecycleRegistry#forwardPass()** 方法
+然后看 LifecycleRegistry 的 `forwardPass` 方法
 
 ```java
 //LifecycleRegistry.java
@@ -574,9 +574,9 @@ private void forwardPass(LifecycleOwner lifecycleOwner) {
 }
 ```
 
-注释1：获取ObserverWithState实例
+注释1：获取 ObserverWithState 实例
 
-注释2：调用ObserverWithState的dispatchEvent方法
+注释2：调用 ObserverWithState 的 `dispatchEvent` 方法
 
 接下来看下ObserverWithState的代码
 
@@ -604,7 +604,7 @@ static class ObserverWithState {
 }
 ```
 
-在看`dispatchEvent`方法之前，先看下构造，ObserverWithState是怎么初始化的？这里提一句，是在Lifecycle.addObserver(@NonNull LifecycleObserver observer);方法时候初始化的。
+在看`dispatchEvent`方法之前，先看下构造，ObserverWithState 是怎么初始化的？这里提一句，是在Lifecycle.addObserver(@NonNull LifecycleObserver observer);方法时候初始化的。
 
 也就是` lifecycle.addObserver(ActivityLifecycleObserver())`
 
@@ -612,20 +612,20 @@ static class ObserverWithState {
 open class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        lifecycle.addObserver(ActivityLifecycleObserver())//1
+        lifecycle.addObserver(ActivityLifecycleObserver())
     }
 }
 ```
 
 在这里初始化的。
 
-ObserverWithState内部包括了State和LifecycleEventObserver，LifecycleEventObserver是一个接口，它继承了LifecycleObserver接口。
+ObserverWithState 内部包括了 State 和 LifecycleEventObserver，LifecycleEventObserver 是一个接口，它继承了 LifecycleObserver 接口。
 
 **注释1：**mLifecycleObserver这个的获取的实例其实是**ReflectiveGenericLifecycleObserver**，具体的点进去看一眼就明白了，我就不贴代码了，但是得注意在实例化 ReflectiveGenericLifecycleObserver(object);时候把LifecycleObserver，传入ReflectiveGenericLifecycleObserver的构造中了，此时**ReflectiveGenericLifecycleObserver持有LifecycleObserver的实例**
 
 **注释2：**关键代码 mLifecycleObserver.onStateChanged(owner, event)，这里其实调用的是**ReflectiveGenericLifecycleObserver的onStateChanged**方法
 
-接下来看下ReflectiveGenericLifecycleObserver的.onStateChanged方法
+接下来看下 ReflectiveGenericLifecycleObserver 的 `onStateChanged` 方法
 
 ### 7.ReflectiveGenericLifecycleObserver
 
@@ -648,13 +648,13 @@ class ReflectiveGenericLifecycleObserver implements LifecycleEventObserver {
 
 ```
 
-**注意：mWrapped其实是LifecycleObserver的实例**，前面我已经调到了。
+> mWrapped其实是LifecycleObserver的实例
 
-**注释 1：**接下来看mInfo的初始化过程，这个是**最关键的代码**了
+注释 1：接下来看mInfo的初始化过程，这个是**最关键的代码**了
 
 **注意注意注意，此时我们要兵分两路先看注释 1 的代码，此时注释 2 的代码是被回调的代码**
 
-### 8.ClassesInfoCache
+### 8.ClassesInfoCache 的 getInfo 方法
 
 ```java
 //ClassesInfoCache.java
@@ -669,7 +669,7 @@ CallbackInfo getInfo(Class<?> klass) {
 
 ```
 
-**注意**：这个klass是LifecycleObserver的字节码文件对象（LifecycleObserver.class）**字节码？反射的味道**，没错继续看下去马上就有结果了。
+> 这个klass是LifecycleObserver的字节码文件对象（LifecycleObserver.class）**字节码？反射的味道**，没错继续看下去马上就有结果了。
 
 继续跟代码
 
@@ -734,7 +734,7 @@ private CallbackInfo createInfo(Class<?> klass, @Nullable Method[] declaredMetho
 
 注释4：给**callType = CALL_TYPE_PROVIDER_WITH_EVENT** 赋值
 
-注释5：把callType和当前的method 存储到MethodReference中，方便接下来取用
+注释5：把callType和当前的method 存储到 MethodReference 中，方便接下来取用
 
 看一下MethodReference中的代码
 
@@ -855,19 +855,19 @@ static class MethodReference {
 
 ##### 在来回顾当初抛出的问题
 
-**1.Lifecycle是怎样感知生命周期的？**
+#### 1.Lifecycle是怎样感知生命周期的？
 
 就是在ReportFragment中的各个生命周期都调用了`dispatch(Lifecycle.Event event)` 方法，传递了不同的**Event**的值
 
-**2.Lifecycle是如何处理生命周期的？**
+#### 2.Lifecycle是如何处理生命周期的？
 
-通过调用了`((LifecycleRegistry) lifecycle).handleLifecycleEvent(event);`方法，也就是LifecycleRegistry类来处理这些生命周期。
+通过调用了`((LifecycleRegistry) lifecycle).handleLifecycleEvent(event);`方法，也就是LifecycleRegistry 类来处理这些生命周期。
 
-**3.LifecycleObserver的方法是怎么回调是的呢？**
+#### 3.LifecycleObserver的方法是怎么回调是的呢？
 
-LifecycleRegistry的handleLifecycleEvent方法，然后会通过层层调用最后通过反射到LifecycleObserver方法上的@OnLifecycleEvent(Lifecycle.Event.XXX)注解值，来调用对应的方法
+LifecycleRegistry 的 handleLifecycleEvent方法，然后会通过层层调用最后通过反射到LifecycleObserver方法上的@OnLifecycleEvent(Lifecycle.Event.XXX)注解值，来调用对应的方法
 
-**4.为什么LifecycleObserver可以感知到Activity的生命周期**
+#### 4.为什么LifecycleObserver可以感知到Activity的生命周期
 
 LifecycleRegistry调用handleLifecycleEvent方法时会传递Event类型，然后会通过层层调用，最后是通过反射获取注解的值，到LifecycleObserver方法上的@OnLifecycleEvent(Lifecycle.Event.XXX)注解上对应的Event的值，注意这个值是和Activity/Fragment的生命周期的一一对应的，所以就可以感知Activity、Fragment的生命周期了。
 
