@@ -1,4 +1,4 @@
-# OkHttp请求的流程的梳理
+# 简洁易懂的 OkHttp 请求的流程源码分析
 
 本文为 [OkHttp](https://square.github.io/okhttp/) 的第一篇文章，主要是对整个请求的流程的梳理，对 OkHttp 整体有一个感性的认识。
 
@@ -329,7 +329,7 @@ override fun execute(): Response {
 
 ### 10.总结
 
-##### 10.1.OkHttp 是如何进行异步请求的？
+#### 10.1.OkHttp 是如何进行异步请求的？
 
 * 通过 OkHttpClient 和 Request 参数构造出 RealCall 对象
 * 通过 RealCall 对象的 `enqueue`方法进行网络请求
@@ -338,7 +338,7 @@ override fun execute(): Response {
 * 调用线程池的 `execute`方法，执行 AsyncCall 的 `run` 方法
 * 在 AsyncCall 的 `run` 方法中，通过 `getResponseWithInterceptorChain`方法获取 response，并通过Callback的 `onResponse` 返回，如果出现异常则调用 `onFailure`方法。
 
-##### 10.2.OkHttp 是如何进行同步请求的？
+#### 10.2.OkHttp 是如何进行同步请求的？
 
 - 通过 OkHttpClient 和 Request 参数构造出 RealCall 对象
 - 通过 RealCall 对象的 `execute`方法进行网络请求

@@ -1,18 +1,15 @@
-OkHttp
+# OkHttp
 
+通过上一篇 [OkHttp请求的流程的梳理](https://juejin.im/post/6870021924337123336)，我们知道了 OkHttp 的整体请求流程，异步请求，同步请求，最后都是通过 `getResponseWithInterceptorChain`方法返回一个 Response 对象
 
+这一篇就重点看一下 `getResponseWithInterceptorChain`方法，来看是如何获取一个 Response 的
 
-通过上一篇，我们知道了 OkHttp 的整体请求流程，异步请求，同步请求，最后都是通过 `getResponseWithInterceptorChain`方法返回一个 Response 对象
+> 整体就是通过一系列的拦截器，处理请求处理响应的过程
 
-这一篇就重点看一下 `getResponseWithInterceptorChain`方法，来看是如何获取一个 Response 的，整体就是通过一系列的拦截器，整体是一个责任链模式
-
-
-
-### getResponseWithInterceptorChain方法
-
-
+### 1.RealCall 的 getResponseWithInterceptorChain方法
 
 ```kotlin
+//RealCall.kt
 @Throws(IOException::class)
 internal fun getResponseWithInterceptorChain(): Response {
   // Build a full stack of interceptors.
@@ -66,12 +63,13 @@ internal fun getResponseWithInterceptorChain(): Response {
 }
 ```
 
-> 先说下拦截器的作用
+> 先说下各个拦截器含义的作用
 >
 > * 自定义的拦截器：根据自己的需求，比如配置公共参数等，这个是在请求之前做的
 > * RetryAndFollowUpInterceptor：重试和重定向拦截器，网络请求出错，或者服务器返会 301、302，OKHttp 会自动帮你重定向
 > * BridgeInterceptor：桥接拦截器，拼接成一个标准的 Http 协议的请求，请求行，Header，Body 等
 > * CacheInterceptor：缓存拦截器，根据 Header 来进行网络缓存的
+> * ConnectInterceptor：连接拦截器，开启一个目标服务器的连接
 > * 网络拦截器：在请求结果返回的时候，可以自定义一个，对接口数据进行处理，比如日志、log等
 > * CallServerInterceptor：请求服务的拦截器，请求服务器
 >
@@ -79,20 +77,18 @@ internal fun getResponseWithInterceptorChain(): Response {
 
 注释 1：一个具体化的拦截器的链，OkHttp 整个请求链的起点
 
-> 构造 RealInterceptorChain时的参数需要注意，
+> 构造 RealInterceptorChain时的参数
 >
-> * 把当前的 Call 对象传入
+> * 把当前的 Call 对象传入，其实是 RealCall
 > * 所有拦截器的集合传入
-> * index = 0，
-> * 以及 originalRequest 
+> * index = 0，当前拦截器集合的索引
+> * 以及 originalRequest，最开始的 Request，没经过拦截器处理的 Request
 
 注释 2：调用 `proceed` 方法，然后就可以根据 index 的值，分别调用不同的拦截器了
 
-注释 3：把最终经过拦截器处理的的 Response 返回
+注释 3：把最终经过拦截器处理的 Response 返回
 
-
-
-### RealInterceptorChain的proceed方法
+### 2.RealInterceptorChain的proceed方法
 
 ```kotlin
 //RealInterceptorChain.kt
@@ -116,7 +112,7 @@ override fun proceed(request: Request): Response {
 }
 ```
 
-注释 1：调用 `copy` 函数，并把 index+1 获取一个新的 RealInterceptorChain对象，注意此时的 index 加 1 了，当前对象的 index 还是0
+注释 1：调用 `copy` 函数，并把 index+1 获取一个新的 RealInterceptorChain对象，注意此时的 index 加 1 了，当前对象的 index 还是 0
 
 > ```kotlin
 > //RealInterceptorChain.kt
@@ -135,7 +131,7 @@ override fun proceed(request: Request): Response {
 
 注释 3：调用 RetryAndFollowUpInterceptor的 `intercept`方法
 
-### RetryAndFollowUpInterceptor重试和重定向拦截器
+### 3.RetryAndFollowUpInterceptor重试和重定向拦截器
 
 ```kotlin
 //RetryAndFollowUpInterceptor.kt

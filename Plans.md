@@ -24,9 +24,10 @@
 
 ### Android 系统源码
 
+* Handler
+
 * HandlerThread
 * IntentService
 * AsyncTask
-* Handler
 * 
 
