@@ -4,7 +4,7 @@
 
 下面这张图描述了一个 HelloWorld.java 文件被 JVM 加载到内存中的过程：
 
-![img](/Users/mac/jhb_projects/ArticleRecord/note/Android34Lecture/images/1-1.png)
+![1-1](https://github.com/jhbxyz/ArticleRecord/blob/master/note/Android34Lecture/images/1-1.png?raw=true)
 
 ## 1.程序计数器（Program Counter Register）
 
