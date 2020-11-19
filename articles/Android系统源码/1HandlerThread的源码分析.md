@@ -1,8 +1,10 @@
-# HandlerThread 的基础使用和源码分析
+# HandlerThread 的简单实用的源码分析
 
 HandlerThread的源码并不多，总共才 100 多行，是一个继承了 Thread 的类，说明是一个线程，内部包装了 Looper 对象，Looper 中持有一个 MessageQueue 对象，底层其实是通过 `MessageQueue`来处理的
 
 通过消息队列来重复使用当前线程，节省系统资源开销，但是一个单线程的任务，一旦队列中有某个任务执行时间过长，那么就会导致后续的任务都会被延迟处理。
+
+通过 HandlerThread 可以让任务执行在指定的子线程（然而并没有什么用，子线程是没什么区别的），其具体使用在 IntentService 中体现。
 
 ### 1.HandlerThread 的使用
 
@@ -16,19 +18,22 @@ public class HandlerThreadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         handlerThread = new HandlerThread("后台线程-1");
         handlerThread.start();
-
+				//1
         Handler handler = new Handler(handlerThread.getLooper()) {
             @Override
             public void handleMessage(@NonNull Message msg) {
                 super.handleMessage(msg);
+              	//3
                 System.out.println("当前线程是: " + Thread.currentThread().getName());
             }
         };
+      	//2
         handler.sendEmptyMessage(0x1);
     }
 
     @Override
     protected void onDestroy() {
+      	//4
         handlerThread.quit();
         super.onDestroy();
     }
@@ -57,18 +62,18 @@ HandlerThread是一个 Thread，当调用 `start`方法时，执行的是 run �
 @Override
 public void run() {
     mTid = Process.myTid();
-  //1
+  	//1
     Looper.prepare();
     synchronized (this) {
-      //2
+      	//2
         mLooper = Looper.myLooper();
-      //3
+     	 //3
         notifyAll();
     }
     Process.setThreadPriority(mPriority);
-  //4
+  	//4
     onLooperPrepared();
-  //5
+  	//5
     Looper.loop();
     mTid = -1;
 }
@@ -82,7 +87,7 @@ public void run() {
 
 注释 4：一个后台运行的方法，在 Looper 实例化后调用
 
-注释 5：使 Looper 循环取来，去取消息
+注释 5：使 Looper 循环起来，去取消息
 
 #### 2.2.HandlerThread 的 getLooper 方法
 
@@ -127,9 +132,11 @@ public boolean quit() {
 
 实际调用的是 Looper 的 `quit`方法，使消息循环停止。
 
+> 底层调用的是MessageQueue 的 `quit`方法，如果了解 Handler 机制应该明白
+
 #### 2.3.HandlerThread 的 getThreadHandler 方法
 
-HandlerThread内部还有一个 Handler 实例，不过是被 @hide 了，也是通过当前线程的 Looper 创建的，具体使用会在 IntentServece 中提现出来。
+HandlerThread内部还有一个 Handler 实例，不过是被 @hide 了，也是通过当前线程的 Looper 创建的，具体使用会在 IntentServece 中体现出来。
 
 ```java
 //HandlerThread.java
@@ -163,5 +170,7 @@ public Handler getThreadHandler() {
 
 * 在不用 HandlerThread 的时候，及时调用 HandlerThread 的 `quit` 方法，结束循环，节省资源。
 
-* 通过 HandlerThread 可以获得Looper 对象，这个 Looper 就是可以指定我们在哪个线程去执行任务的
+* 通过 HandlerThread 可以获得Looper 对象，这个 Looper 就是可以指定我们在哪个子线程去执行任务的
+
+  > 然而并没有什么用，子线程是没什么区别的
 
