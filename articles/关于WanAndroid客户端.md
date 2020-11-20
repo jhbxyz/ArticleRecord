@@ -8,9 +8,8 @@
 
 我录了个 GIF 看一下具体操作吧！
 
+![](https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/wan-gif-1.gif)
 
-
-首先整体来看看这个 APP 长什么样子吧！
 
 
 整个 APP 主色调为天蓝色，在颜色选择、文字大小、图标方面我都花费了很多心思，整体的设计模块参考主流的 APP 格式，底部有五个 Tab 分别是：**首页、问答、收藏、发现、我的**！
