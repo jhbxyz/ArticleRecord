@@ -98,15 +98,11 @@ WanAndroid 相当有特殊的一个模块，非常干的干货，鸿洋会提出
 
 ### 最后放一拨儿 APP 内的截图！
 
-<center class = "half">
-	<img src="https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/w-1.jpg" width="50%" /><img src="https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/w-2.jpg" width="50%" />
-</center>
+<img src="https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/w-1.jpg" width="250" />		<img src="https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/w-2.jpg" width="250" />
 
-<center class = "half">
-	<img src="https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/w-3.jpg" width="50%" /><img src="https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/w-4.jpg" width="50%" />
-</center>
+<img src="https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/w-3.jpg" width="250" /> 		 <img src="https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/w-4.jpg" width="250" />
 
-<img src="https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/w-5.jpg" width="50%" />
+<img src="https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/w-5.jpg" width="250" />
 
 
 
