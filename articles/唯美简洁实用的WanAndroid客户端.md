@@ -1,4 +1,4 @@
-# 唯美简洁好用的 WanAndroid 客户端
+# 唯美简洁实用的 WanAndroid 客户端
 
 最近一直在忙着写 WanAndroid 的客户端，什么？你还不知道 WanAndroid 是啥？兄弟感觉你错过了一个亿啊！[WanAndroid](https://wanandroid.com/index) 是[鸿洋](https://github.com/hongyangAndroid)开发并维护的一个专门学习 **Android** 的站点，这里面你可以学习到各种关于 Android 知识。精彩的**每日一问**、你需要的**面试资料、面试题**、当然你也可以在这个上面**分享**知识博客，以及其他好的关于学习 Android 的内容。非常建议学习浏览！
 
@@ -28,9 +28,9 @@
 
 这个项目采用 `MVVM` 架构，完全用 `Kotlin` 语音编写，采用 `Retrofit` 和 `Kotlin-Coroutine` **协程**进行网络交互，加载图片 `Glide` 主流加载图片框架，数据存储主要用到了 `Room` 和腾讯的 `MMKV`。
 
-Android Jetpack 是目前 Android 学习开发的趋势，所以我在项目用到了 `Lifecycle`、`LiveData`、`ViewModel`、`Databinding`、`Room`、`ViewPager2`、`ConstraintLayout`、`AndroidX`
+Android Jetpack 是目前 Android 学习开发的趋势，所以我在项目用到了 `Lifecycle`、`LiveData`、`ViewModel`、`Databinding`、`Room`、`ViewPager2`、`ConstraintLayout`、`AndroidX`等 Jetpack 相关的最新技术
 
-我相信这个一个非常不错的学习 **MMVM + Kotlin + Jetpack**的项目了，应该是学 MVVM 架构的最佳实践了
+我相信这个一个非常不错的学习 **MMVM + Kotlin + Jetpack **的项目了，应该是学 MVVM 架构的最佳实践了！
 
 具体内容请看[源码](https://github.com/jhbxyz/WanAndroidJetpack)同时我在项目的 ReadMe 文件中做了详细的说明
 
@@ -98,8 +98,11 @@ WanAndroid 相当有特殊的一个模块，非常干的干货，鸿洋会提出
 
 ### 最后放一拨儿 APP 内的截图！
 
-<img src="https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/w-1.jpg" width="250" /><img src="https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/w-2.jpg" width="250" />
-<img src="https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/w-3.jpg" width="250" /><img src="https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/w-4.jpg" width="250" /><img src="https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/w-5.jpg" width="250" />
+<img src="https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/w-1.jpg" width="50%" />
+<img src="https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/w-2.jpg" width="50%" />
+<img src="https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/w-3.jpg" width="50%" />
+<img src="https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/w-4.jpg" width="50%" />
+<img src="https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/w-5.jpg" width="50%" />
 
 
 
