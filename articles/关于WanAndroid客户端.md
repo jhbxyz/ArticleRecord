@@ -10,24 +10,16 @@
 
 
 
-
-
 首先整体来看看这个 APP 长什么样子吧！
 
 
-<center >
-<img src="https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/w-1.jpg" width = "150" alt="首页"  />
-<img src="https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/w-2.jpg" width = "150"  alt="问答" />
-<img src="https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/w-3.jpg" width = "150"  alt="收藏"  />
-<img src="https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/w-4.jpg" width = "150"  alt="发现" />
-<img src="https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/w-5.jpg" width = "150"  alt="我的" />
-</center>
-
-底部有五个 Tab 分别是：**首页、问答、收藏、发现、我的**，一一对应上面的页面！
+整个 APP 主色调为天蓝色，在颜色选择、文字大小、图标方面我都花费了很多心思，整体的设计模块参考主流的 APP 格式，底部有五个 Tab 分别是：**首页、问答、收藏、发现、我的**！
 
 下面我来分别介绍各个模块
 
 ### 1.首页
+<img src="https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/w-1.jpg" width = "550" alt="首页" />
+
 
 * 这个模块是由 Banner 图、置顶文章和 Feed 流组成，主要是每天大家分享最新的博客等内容，当然你也可以来一起分享！
 * 这里面点击每个 Item 都会进入到具体的文章页面
