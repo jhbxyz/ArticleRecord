@@ -6,13 +6,20 @@
 
 我就是根据 WanAndroid 提供的 API，写了一个客户端，这样可以在手机上可以继续学习了，真是太方便了！
 
-这是一个体验极好的 WanAndroid 客户端，**页面非常简洁直接但并不缺少美感**
-
-整体的设计、UI、图标、配色，都是根据经过**仔细揣摩精心设计**的，我觉还是很精美的！
+* 这是一个体验极好的 WanAndroid 客户端，**页面非常简洁直接但并不缺少美感**
+* 整体的设计、UI、图标、配色，都是根据经过**仔细揣摩精心设计**的，我觉还是很精美的！
+* 优秀的用户体验和交互设计
+* 整洁的代码风格 和 标准的资源命名规范
 
 **产品的需求**，主要根据我自己学习的**痛点**来实现的，我相信有一部分也是你们所需要的，比如，我要快速看到**每日一问**这个非常重要的模块，或者我需要很快的看到**面试以及面试题**相关的内容，又或者我想看到我自己收藏的文章，这些我都做了单独 Tab 来快速找到自己想要看的。
 
 ### 我录了个 GIF ，看一下具体内容吧！
+
+**友情提示：**
+
+> Gif 还有下面的截图和真是 APP 的 UI 细节有出入，比如淡白色的分割线，背景色等等！
+>
+> 下载 APP 体验更佳，一起学起来吧！
 
 ![](https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/wan-gif.gif)
 
@@ -30,9 +37,9 @@
 
 Android Jetpack 是目前 Android 学习开发的趋势，所以我在项目用到了 `Lifecycle`、`LiveData`、`ViewModel`、`Databinding`、`Room`、`ViewPager2`、`ConstraintLayout`、`AndroidX`等 Jetpack 相关的最新技术
 
-我相信这个一个非常不错的学习 **MMVM + Kotlin + Jetpack **的项目了，应该是学 MVVM 架构的最佳实践了！
+我相信这个一个非常不错的学习 **MMVM + Kotlin + Jetpack ** 的项目了，应该是学 MVVM 架构的最佳实践了！
 
-具体内容请看[源码](https://github.com/jhbxyz/WanAndroidJetpack)同时我在项目的 ReadMe 文件中做了详细的说明
+具体内容请看[源码](https://github.com/jhbxyz/WanAndroidJetpack)，同时我在项目的 ReadMe 文件中做了详细的说明
 
 **喜欢的点个 Stars，有问题的请提 Issues**
 
