@@ -1,4 +1,4 @@
-关于 WanAndroid 客户端
+# 推荐一下我开发的项目 WanAndroid 客户端
 
 * 一个纯 Android 学习项目，WanAndroid 客户端，
 * 项目采用 `MVVM` 架构，用 `Kotlin` 语音编写
@@ -13,4 +13,4 @@
 
 ![](https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/wan-gif.gif)
 
-喜欢的
+喜欢的点个 [Stars](https://github.com/jhbxyz/WanAndroidJetpack)，有问题的请提 Issues**

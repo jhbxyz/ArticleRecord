@@ -29,7 +29,7 @@ Android Jetpack 是目前 Android 学习开发的趋势，所以我在项目用�
 
 我相信这个一个非常不错的学习 MMVM + Kotlin + Jetpack 的项目了！具体细节请看 GitHub 的项目 [WanAndroidJetpack](https://github.com/jhbxyz/WanAndroidJetpack)
 
-**喜欢的点个 Stars，有问题的请提 Issues**
+**喜欢的点个 [Stars](https://github.com/jhbxyz/WanAndroidJetpack)，有问题的请提 Issues**
 
 ## 3.WanAndroid 客户端长什么样子
 
@@ -39,7 +39,7 @@ Android Jetpack 是目前 Android 学习开发的趋势，所以我在项目用�
 
 > Gif 还有下面的截图和真是 APP 的 UI 细节有出入，比如淡白色的分割线，背景色等等！ 
 >
-> 下载 APP体验更佳，一起学起来吧！
+> 下载 APP 体验更佳，一起学起来吧！
 
 ![](https://raw.githubusercontent.com/jhbxyz/ArticleRecord/master/images/wan-gif.gif)
 
@@ -118,3 +118,6 @@ WanAndroid 相当有特殊的一个模块，非常干的干货，鸿洋会提出
 * 代码细节，请看项目 [WanAndroidJetpack](https://github.com/jhbxyz/WanAndroidJetpack)
 * 使用的第三方库和日志更新在 GitHub 上
 * 下载体验请 [点击下载 ](https://github.com/jhbxyz/WanAndroidJetpack/blob/master/app/apk/app-release.apk?raw=true)
+
+
+
