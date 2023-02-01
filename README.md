@@ -1,8 +1,5 @@
 # 我的文章
 
-* [测试跳转](#test_jump)
-* 
-
 ### 自定义 View 系列
 
 * [Android自定义View实现圆角遮罩效果](https://github.com/jhbxyz/ArticleRecord/blob/master/articles/%E8%87%AA%E5%AE%9A%E4%B9%89View/1%E5%9C%86%E8%A7%92%E7%9F%A9%E5%BD%A2%E9%81%AE%E7%BD%A9%E6%95%88%E6%9E%9C.md)
@@ -51,11 +48,6 @@
 
 
 
-
-
-
-
-<a name="test_jump">测试跳转</a>
 
 
 
